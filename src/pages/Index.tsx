@@ -1,10 +1,16 @@
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import ModuleSidebar from '@/components/ModuleSidebar';
 import ModuleContent from '@/components/ModuleContent';
 import LogSection from '@/components/LogSection';
 import { useToast } from '@/hooks/use-toast';
+
+interface SubModule {
+  id: string;
+  title: string;
+  status: 'not-started' | 'in-progress' | 'completed';
+  type: 'video' | 'bulk-upload' | 'api';
+}
 
 interface Module {
   id: string;
@@ -19,6 +25,7 @@ interface Module {
     url?: string;
   };
   progress: number;
+  subModules: SubModule[];
 }
 
 interface LogEntry {
@@ -38,7 +45,7 @@ const Index = () => {
     {
       id: 'product-catalog',
       title: 'Product Catalog Management',
-      description: 'Learn to manage and sync your product catalog',
+      description: 'Learn to manage and sync your product catalog across platforms',
       status: 'in-progress',
       sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
       video: {
@@ -47,11 +54,16 @@ const Index = () => {
         duration: '15:30',
       },
       progress: 65,
+      subModules: [
+        { id: 'pc-video', title: 'Introduction Video', status: 'completed', type: 'video' },
+        { id: 'pc-bulk', title: 'Bulk Product Upload', status: 'in-progress', type: 'bulk-upload' },
+        { id: 'pc-api', title: 'Product API Integration', status: 'not-started', type: 'api' },
+      ],
     },
     {
       id: 'inventory-sync',
       title: 'Inventory Synchronization',
-      description: 'Real-time inventory updates and stock management',
+      description: 'Real-time inventory updates and stock management across channels',
       status: 'not-started',
       sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
       video: {
@@ -60,11 +72,16 @@ const Index = () => {
         duration: '12:45',
       },
       progress: 0,
+      subModules: [
+        { id: 'is-video', title: 'Sync Fundamentals', status: 'not-started', type: 'video' },
+        { id: 'is-bulk', title: 'Bulk Inventory Update', status: 'not-started', type: 'bulk-upload' },
+        { id: 'is-api', title: 'Real-time Sync API', status: 'not-started', type: 'api' },
+      ],
     },
     {
       id: 'order-management',
       title: 'Order Management',
-      description: 'Process and track orders efficiently',
+      description: 'Process and track orders efficiently from creation to fulfillment',
       status: 'completed',
       sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
       video: {
@@ -73,11 +90,16 @@ const Index = () => {
         duration: '18:20',
       },
       progress: 100,
+      subModules: [
+        { id: 'om-video', title: 'Order Flow Overview', status: 'completed', type: 'video' },
+        { id: 'om-bulk', title: 'Bulk Order Processing', status: 'completed', type: 'bulk-upload' },
+        { id: 'om-api', title: 'Order Management API', status: 'completed', type: 'api' },
+      ],
     },
     {
       id: 'pricing-updates',
       title: 'Pricing Updates',
-      description: 'Dynamic pricing and bulk price modifications',
+      description: 'Dynamic pricing strategies and bulk price modifications',
       status: 'not-started',
       sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
       video: {
@@ -86,11 +108,16 @@ const Index = () => {
         duration: '10:15',
       },
       progress: 0,
+      subModules: [
+        { id: 'pu-video', title: 'Pricing Strategy Guide', status: 'not-started', type: 'video' },
+        { id: 'pu-bulk', title: 'Bulk Price Updates', status: 'not-started', type: 'bulk-upload' },
+        { id: 'pu-api', title: 'Dynamic Pricing API', status: 'not-started', type: 'api' },
+      ],
     },
     {
       id: 'shipping-tracking',
       title: 'Shipping & Tracking',
-      description: 'Shipping integration and tracking updates',
+      description: 'Shipping integration and automated tracking updates',
       status: 'not-started',
       sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
       video: {
@@ -99,6 +126,11 @@ const Index = () => {
         duration: '14:30',
       },
       progress: 0,
+      subModules: [
+        { id: 'st-video', title: 'Shipping Setup Guide', status: 'not-started', type: 'video' },
+        { id: 'st-bulk', title: 'Bulk Shipping Config', status: 'not-started', type: 'bulk-upload' },
+        { id: 'st-api', title: 'Tracking API Integration', status: 'not-started', type: 'api' },
+      ],
     },
   ]);
 
