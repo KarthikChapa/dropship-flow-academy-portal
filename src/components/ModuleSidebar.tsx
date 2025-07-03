@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { CheckCircle, Circle, Play, Book, Upload, Code, ChevronDown, ChevronRight } from 'lucide-react';
+import { CheckCircle, Circle, Play, Book, Upload, Code, ChevronDown, ChevronRight, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SubModule {
@@ -8,6 +8,7 @@ interface SubModule {
   title: string;
   status: 'not-started' | 'in-progress' | 'completed';
   type: 'video' | 'bulk-upload' | 'api';
+  estimatedTime?: string;
 }
 
 interface Module {
@@ -24,6 +25,11 @@ interface Module {
   };
   progress: number;
   subModules: SubModule[];
+  estimatedTime?: {
+    total: string;
+    bulkUpload: string;
+    apiIntegration: string;
+  };
 }
 
 interface ModuleSidebarProps {
@@ -124,6 +130,29 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                       <p className="text-sm text-gray-700 mb-4 leading-relaxed line-clamp-2">
                         {module.description}
                       </p>
+
+                      {module.estimatedTime && (
+                        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center space-x-2 mb-2">
+                            <Clock className="h-4 w-4 text-gray-600" />
+                            <span className="text-sm font-semibold text-gray-700">Estimated Time</span>
+                          </div>
+                          <div className="space-y-1 text-xs text-gray-600">
+                            <div className="flex justify-between">
+                              <span>Total:</span>
+                              <span className="font-medium">{module.estimatedTime.total}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>Bulk Upload:</span>
+                              <span className="font-medium">{module.estimatedTime.bulkUpload}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span>API Integration:</span>
+                              <span className="font-medium">{module.estimatedTime.apiIntegration}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       
                       <div className="flex items-center justify-between">
                         <div className="flex-1 mr-4">
@@ -151,17 +180,25 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                       {module.subModules.map((subModule) => (
                         <div
                           key={subModule.id}
-                          className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                          className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                         >
-                          <div className="flex-shrink-0">
-                            {getStatusIcon(subModule.status)}
+                          <div className="flex items-center space-x-3">
+                            <div className="flex-shrink-0">
+                              {getStatusIcon(subModule.status)}
+                            </div>
+                            <div className="flex items-center space-x-3">
+                              {getSubModuleIcon(subModule.type)}
+                              <span className="text-sm font-medium text-gray-800">
+                                {subModule.title}
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex items-center space-x-3 flex-1 min-w-0">
-                            {getSubModuleIcon(subModule.type)}
-                            <span className="text-sm font-medium text-gray-800">
-                              {subModule.title}
-                            </span>
-                          </div>
+                          {subModule.estimatedTime && (
+                            <div className="flex items-center space-x-1 text-xs text-gray-500">
+                              <Clock className="h-3 w-3" />
+                              <span>{subModule.estimatedTime}</span>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>

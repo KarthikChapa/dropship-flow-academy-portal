@@ -10,6 +10,7 @@ interface SubModule {
   title: string;
   status: 'not-started' | 'in-progress' | 'completed';
   type: 'video' | 'bulk-upload' | 'api';
+  estimatedTime?: string;
 }
 
 interface Module {
@@ -26,6 +27,11 @@ interface Module {
   };
   progress: number;
   subModules: SubModule[];
+  estimatedTime?: {
+    total: string;
+    bulkUpload: string;
+    apiIntegration: string;
+  };
 }
 
 interface LogEntry {
@@ -54,10 +60,33 @@ const Index = () => {
         duration: '15:30',
       },
       progress: 65,
+      estimatedTime: {
+        total: '2-3 hours',
+        bulkUpload: '45 mins',
+        apiIntegration: '1.5 hours'
+      },
       subModules: [
-        { id: 'pc-video', title: 'Introduction Video', status: 'completed', type: 'video' },
-        { id: 'pc-bulk', title: 'Bulk Product Upload', status: 'in-progress', type: 'bulk-upload' },
-        { id: 'pc-api', title: 'Product API Integration', status: 'not-started', type: 'api' },
+        { 
+          id: 'pc-video', 
+          title: 'Introduction Video', 
+          status: 'completed', 
+          type: 'video',
+          estimatedTime: '15 mins'
+        },
+        { 
+          id: 'pc-bulk', 
+          title: 'Bulk Product Upload', 
+          status: 'in-progress', 
+          type: 'bulk-upload',
+          estimatedTime: '45 mins'
+        },
+        { 
+          id: 'pc-api', 
+          title: 'Product API Integration', 
+          status: 'not-started', 
+          type: 'api',
+          estimatedTime: '1.5 hours'
+        },
       ],
     },
     {
@@ -72,10 +101,33 @@ const Index = () => {
         duration: '12:45',
       },
       progress: 0,
+      estimatedTime: {
+        total: '1.5-2 hours',
+        bulkUpload: '30 mins',
+        apiIntegration: '1 hour'
+      },
       subModules: [
-        { id: 'is-video', title: 'Sync Fundamentals', status: 'not-started', type: 'video' },
-        { id: 'is-bulk', title: 'Bulk Inventory Update', status: 'not-started', type: 'bulk-upload' },
-        { id: 'is-api', title: 'Real-time Sync API', status: 'not-started', type: 'api' },
+        { 
+          id: 'is-video', 
+          title: 'Sync Fundamentals', 
+          status: 'not-started', 
+          type: 'video',
+          estimatedTime: '12 mins'
+        },
+        { 
+          id: 'is-bulk', 
+          title: 'Bulk Inventory Update', 
+          status: 'not-started', 
+          type: 'bulk-upload',
+          estimatedTime: '30 mins'
+        },
+        { 
+          id: 'is-api', 
+          title: 'Real-time Sync API', 
+          status: 'not-started', 
+          type: 'api',
+          estimatedTime: '1 hour'
+        },
       ],
     },
     {
@@ -90,10 +142,33 @@ const Index = () => {
         duration: '18:20',
       },
       progress: 100,
+      estimatedTime: {
+        total: '2.5-3 hours',
+        bulkUpload: '1 hour',
+        apiIntegration: '1.5 hours'
+      },
       subModules: [
-        { id: 'om-video', title: 'Order Flow Overview', status: 'completed', type: 'video' },
-        { id: 'om-bulk', title: 'Bulk Order Processing', status: 'completed', type: 'bulk-upload' },
-        { id: 'om-api', title: 'Order Management API', status: 'completed', type: 'api' },
+        { 
+          id: 'om-video', 
+          title: 'Order Flow Overview', 
+          status: 'completed', 
+          type: 'video',
+          estimatedTime: '18 mins'
+        },
+        { 
+          id: 'om-bulk', 
+          title: 'Bulk Order Processing', 
+          status: 'completed', 
+          type: 'bulk-upload',
+          estimatedTime: '1 hour'
+        },
+        { 
+          id: 'om-api', 
+          title: 'Order Management API', 
+          status: 'completed', 
+          type: 'api',
+          estimatedTime: '1.5 hours'
+        },
       ],
     },
     {
@@ -108,10 +183,33 @@ const Index = () => {
         duration: '10:15',
       },
       progress: 0,
+      estimatedTime: {
+        total: '1-1.5 hours',
+        bulkUpload: '25 mins',
+        apiIntegration: '45 mins'
+      },
       subModules: [
-        { id: 'pu-video', title: 'Pricing Strategy Guide', status: 'not-started', type: 'video' },
-        { id: 'pu-bulk', title: 'Bulk Price Updates', status: 'not-started', type: 'bulk-upload' },
-        { id: 'pu-api', title: 'Dynamic Pricing API', status: 'not-started', type: 'api' },
+        { 
+          id: 'pu-video', 
+          title: 'Pricing Strategy Guide', 
+          status: 'not-started', 
+          type: 'video',
+          estimatedTime: '10 mins'
+        },
+        { 
+          id: 'pu-bulk', 
+          title: 'Bulk Price Updates', 
+          status: 'not-started', 
+          type: 'bulk-upload',
+          estimatedTime: '25 mins'
+        },
+        { 
+          id: 'pu-api', 
+          title: 'Dynamic Pricing API', 
+          status: 'not-started', 
+          type: 'api',
+          estimatedTime: '45 mins'
+        },
       ],
     },
     {
@@ -126,10 +224,33 @@ const Index = () => {
         duration: '14:30',
       },
       progress: 0,
+      estimatedTime: {
+        total: '2-2.5 hours',
+        bulkUpload: '50 mins',
+        apiIntegration: '1.25 hours'
+      },
       subModules: [
-        { id: 'st-video', title: 'Shipping Setup Guide', status: 'not-started', type: 'video' },
-        { id: 'st-bulk', title: 'Bulk Shipping Config', status: 'not-started', type: 'bulk-upload' },
-        { id: 'st-api', title: 'Tracking API Integration', status: 'not-started', type: 'api' },
+        { 
+          id: 'st-video', 
+          title: 'Shipping Setup Guide', 
+          status: 'not-started', 
+          type: 'video',
+          estimatedTime: '14 mins'
+        },
+        { 
+          id: 'st-bulk', 
+          title: 'Bulk Shipping Config', 
+          status: 'not-started', 
+          type: 'bulk-upload',
+          estimatedTime: '50 mins'
+        },
+        { 
+          id: 'st-api', 
+          title: 'Tracking API Integration', 
+          status: 'not-started', 
+          type: 'api',
+          estimatedTime: '1.25 hours'
+        },
       ],
     },
   ]);
