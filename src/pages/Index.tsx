@@ -342,7 +342,10 @@ const Index = () => {
         <ModuleSidebar
           modules={modules}
           activeModule={activeModule}
-          onModuleSelect={setActiveModule}
+          onModuleSelect={(moduleId) => {
+            setActiveModule(moduleId);
+            startModule(moduleId);
+          }}
           getElapsedTime={getElapsedTime}
           isModuleStarted={isModuleStarted}
         />
@@ -353,7 +356,6 @@ const Index = () => {
               module={currentModule}
               onFileUpload={handleFileUpload}
               onApiTest={handleApiTest}
-              onVideoStart={() => startModule(currentModule.id)}
             />
           </div>
           

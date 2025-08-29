@@ -17,10 +17,15 @@ export const useModuleTimer = () => {
   }, []);
 
   const startModule = (moduleId: string) => {
-    setModuleStartTimes(prev => ({
-      ...prev,
-      [moduleId]: Date.now()
-    }));
+    setModuleStartTimes(prev => {
+      // Only start if not already started
+      if (prev[moduleId]) return prev;
+      
+      return {
+        ...prev,
+        [moduleId]: Date.now()
+      };
+    });
   };
 
   const getElapsedTime = (moduleId: string): string => {

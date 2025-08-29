@@ -25,10 +25,9 @@ interface ModuleContentProps {
   module: Module;
   onFileUpload: (file: File, type: string) => void;
   onApiTest: (endpoint: string, data: any) => void;
-  onVideoStart: () => void;
 }
 
-const ModuleContent = ({ module, onFileUpload, onApiTest, onVideoStart }: ModuleContentProps) => {
+const ModuleContent = ({ module, onFileUpload, onApiTest }: ModuleContentProps) => {
   const getStatusColor = (status: Module['status']) => {
     switch (status) {
       case 'completed':
@@ -79,7 +78,6 @@ const ModuleContent = ({ module, onFileUpload, onApiTest, onVideoStart }: Module
           description={module.video.description}
           videoUrl={module.video.url}
           duration={module.video.duration}
-          onVideoStart={onVideoStart}
         />
 
         <BulkUploadSection

@@ -9,18 +9,10 @@ interface VideoSectionProps {
   description: string;
   videoUrl?: string;
   duration: string;
-  onVideoStart?: () => void;
 }
 
-const VideoSection = ({ title, description, videoUrl, duration, onVideoStart }: VideoSectionProps) => {
+const VideoSection = ({ title, description, videoUrl, duration }: VideoSectionProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const handlePlay = () => {
-    if (!isPlaying && onVideoStart) {
-      onVideoStart();
-    }
-    setIsPlaying(!isPlaying);
-  };
 
   return (
     <Card className="mb-6">
@@ -58,7 +50,7 @@ const VideoSection = ({ title, description, videoUrl, duration, onVideoStart }: 
             <Button
               variant="outline"
               size="sm"
-              onClick={handlePlay}
+              onClick={() => setIsPlaying(!isPlaying)}
             >
               {isPlaying ? (
                 <Pause className="h-4 w-4 mr-2" />
