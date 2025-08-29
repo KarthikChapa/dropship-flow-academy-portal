@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { CheckCircle, Circle, Play, Book, Upload, Code, ChevronDown, ChevronRight, Clock } from 'lucide-react';
+import { CheckCircle, Circle, Play, Book, Upload, Code, ChevronDown, ChevronRight, Clock, Timer } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SubModule {
@@ -36,9 +36,11 @@ interface ModuleSidebarProps {
   modules: Module[];
   activeModule: string;
   onModuleSelect: (moduleId: string) => void;
+  getElapsedTime: (moduleId: string) => string;
+  isModuleStarted: (moduleId: string) => boolean;
 }
 
-const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarProps) => {
+const ModuleSidebar = ({ modules, activeModule, onModuleSelect, getElapsedTime, isModuleStarted }: ModuleSidebarProps) => {
   const [expandedModules, setExpandedModules] = useState<string[]>([activeModule]);
 
   const toggleModule = (moduleId: string) => {
@@ -150,6 +152,18 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                               <span>API Integration:</span>
                               <span className="font-medium">{module.estimatedTime.apiIntegration}</span>
                             </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {isModuleStarted(module.id) && (
+                        <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                          <div className="flex items-center space-x-2">
+                            <Timer className="h-4 w-4 text-blue-600" />
+                            <span className="text-sm font-semibold text-blue-700">Time Elapsed</span>
+                            <span className="text-sm font-bold text-blue-800">
+                              {getElapsedTime(module.id)}
+                            </span>
                           </div>
                         </div>
                       )}

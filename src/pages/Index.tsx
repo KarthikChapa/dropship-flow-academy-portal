@@ -4,6 +4,7 @@ import ModuleSidebar from '@/components/ModuleSidebar';
 import ModuleContent from '@/components/ModuleContent';
 import LogSection from '@/components/LogSection';
 import { useToast } from '@/hooks/use-toast';
+import { useModuleTimer } from '@/hooks/useModuleTimer';
 
 interface SubModule {
   id: string;
@@ -46,6 +47,7 @@ interface LogEntry {
 
 const Index = () => {
   const { toast } = useToast();
+  const { startModule, getElapsedTime, isModuleStarted } = useModuleTimer();
   
   const [modules] = useState<Module[]>([
     {
@@ -341,6 +343,8 @@ const Index = () => {
           modules={modules}
           activeModule={activeModule}
           onModuleSelect={setActiveModule}
+          getElapsedTime={getElapsedTime}
+          isModuleStarted={isModuleStarted}
         />
         
         <div className="flex-1 flex flex-col lg:flex-row">
@@ -349,6 +353,7 @@ const Index = () => {
               module={currentModule}
               onFileUpload={handleFileUpload}
               onApiTest={handleApiTest}
+              onVideoStart={() => startModule(currentModule.id)}
             />
           </div>
           
