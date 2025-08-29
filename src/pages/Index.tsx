@@ -4,7 +4,6 @@ import ModuleSidebar from '@/components/ModuleSidebar';
 import ModuleContent from '@/components/ModuleContent';
 import LogSection from '@/components/LogSection';
 import { useToast } from '@/hooks/use-toast';
-import { useModuleTimer } from '@/hooks/useModuleTimer';
 
 interface SubModule {
   id: string;
@@ -47,7 +46,6 @@ interface LogEntry {
 
 const Index = () => {
   const { toast } = useToast();
-  const { startModule, getElapsedTime, isModuleStarted } = useModuleTimer();
   
   const [modules] = useState<Module[]>([
     {
@@ -342,12 +340,7 @@ const Index = () => {
         <ModuleSidebar
           modules={modules}
           activeModule={activeModule}
-          onModuleSelect={(moduleId) => {
-            setActiveModule(moduleId);
-            startModule(moduleId);
-          }}
-          getElapsedTime={getElapsedTime}
-          isModuleStarted={isModuleStarted}
+          onModuleSelect={setActiveModule}
         />
         
         <div className="flex-1 flex flex-col lg:flex-row">
