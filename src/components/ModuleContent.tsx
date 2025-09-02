@@ -21,6 +21,13 @@ interface Module {
   };
   progress: number;
   notes?: string[];
+  scenarios: Array<{
+    id: string;
+    title: string;
+    status: 'not-started' | 'in-progress' | 'completed';
+    estimatedTime: string;
+  }>;
+  estimatedTime: string;
 }
 
 interface ModuleContentProps {

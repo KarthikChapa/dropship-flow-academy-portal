@@ -5,12 +5,11 @@ import ModuleContent from '@/components/ModuleContent';
 import LogSection from '@/components/LogSection';
 import { useToast } from '@/hooks/use-toast';
 
-interface SubModule {
+interface Scenario {
   id: string;
   title: string;
   status: 'not-started' | 'in-progress' | 'completed';
-  type: 'video' | 'bulk-upload' | 'api';
-  estimatedTime?: string;
+  estimatedTime: string;
 }
 
 interface Module {
@@ -27,12 +26,8 @@ interface Module {
   };
   progress: number;
   notes?: string[];
-  subModules: SubModule[];
-  estimatedTime?: {
-    total: string;
-    bulkUpload: string;
-    apiIntegration: string;
-  };
+  scenarios: Scenario[];
+  estimatedTime: string;
 }
 
 interface LogEntry {
@@ -50,219 +45,242 @@ const Index = () => {
   
   const [modules] = useState<Module[]>([
     {
-      id: 'product-catalog',
-      title: 'Product Catalog Management',
-      description: 'Learn to manage and sync your product catalog across platforms',
+      id: 'advert-variant-creation',
+      title: 'Advert and Variant Creation',
+      description: 'Learn to create advertisements with single and multiple variants',
       status: 'in-progress',
-      sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
+      sections: ['Video Tutorial', 'Scenarios'],
       video: {
-        title: 'Product Catalog Integration Tutorial',
-        description: 'Complete guide to product catalog management including bulk upload and API integration methods.',
-        duration: '15:30',
+        title: 'Advert Creation Guide',
+        description: 'Complete guide to creating adverts with variants.',
+        duration: '20:00',
       },
-      progress: 65,
+      progress: 50,
       notes: [
-        "Product catalog management is crucial for maintaining consistent inventory across all sales channels.",
-        "Ensure product data includes all required fields: SKU, title, description, price, and inventory count.",
-        "Use bulk upload for initial setup and API integration for real-time updates.",
-        "Always validate product data before uploading to prevent errors in your storefront."
+        "Adverts are the foundation of your product listings across platforms.",
+        "Single variant adverts are perfect for unique products without variations.",
+        "Multiple variant adverts allow customers to choose from size, color, or other options.",
+        "Ensure all variant details are accurate before publishing."
       ],
-      estimatedTime: {
-        total: '2-3 hours',
-        bulkUpload: '45 mins',
-        apiIntegration: '1.5 hours'
-      },
-      subModules: [
+      estimatedTime: '45 mins',
+      scenarios: [
         { 
-          id: 'pc-video', 
-          title: 'Introduction Video', 
-          status: 'completed', 
-          type: 'video',
-          estimatedTime: '15 mins'
+          id: 'avc-single', 
+          title: 'Create Advert with 1 variant', 
+          status: 'completed',
+          estimatedTime: '20 mins'
         },
         { 
-          id: 'pc-bulk', 
-          title: 'Bulk Product Upload', 
-          status: 'in-progress', 
-          type: 'bulk-upload',
-          estimatedTime: '45 mins'
-        },
-        { 
-          id: 'pc-api', 
-          title: 'Product API Integration', 
-          status: 'not-started', 
-          type: 'api',
-          estimatedTime: '1.5 hours'
+          id: 'avc-multiple', 
+          title: 'Create Advert with Multiple variant', 
+          status: 'in-progress',
+          estimatedTime: '25 mins'
         },
       ],
     },
     {
-      id: 'inventory-sync',
-      title: 'Inventory Synchronization',
-      description: 'Real-time inventory updates and stock management across channels',
+      id: 'variant-update',
+      title: 'Variant Update',
+      description: 'Update stock levels, pricing, EOL status and add product images',
       status: 'not-started',
-      sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
+      sections: ['Video Tutorial', 'Scenarios'],
       video: {
-        title: 'Inventory Sync Integration Tutorial',
-        description: 'Learn how to keep your inventory synchronized across all platforms.',
-        duration: '12:45',
+        title: 'Variant Management Tutorial',
+        description: 'Learn how to update all aspects of your product variants.',
+        duration: '25:00',
       },
       progress: 0,
-      estimatedTime: {
-        total: '1.5-2 hours',
-        bulkUpload: '30 mins',
-        apiIntegration: '1 hour'
-      },
-      subModules: [
-        { 
-          id: 'is-video', 
-          title: 'Sync Fundamentals', 
-          status: 'not-started', 
-          type: 'video',
-          estimatedTime: '12 mins'
-        },
-        { 
-          id: 'is-bulk', 
-          title: 'Bulk Inventory Update', 
-          status: 'not-started', 
-          type: 'bulk-upload',
-          estimatedTime: '30 mins'
-        },
-        { 
-          id: 'is-api', 
-          title: 'Real-time Sync API', 
-          status: 'not-started', 
-          type: 'api',
-          estimatedTime: '1 hour'
-        },
+      notes: [
+        "Regular variant updates ensure accurate inventory and pricing.",
+        "Stock updates should be done frequently to avoid overselling.",
+        "Wholesale pricing affects your profit margins - update carefully.",
+        "EOL (End of Life) marking helps manage discontinued products."
       ],
-    },
-    {
-      id: 'order-management',
-      title: 'Order Management',
-      description: 'Process and track orders efficiently from creation to fulfillment',
-      status: 'completed',
-      sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
-      video: {
-        title: 'Order Management Integration Tutorial',
-        description: 'Complete order lifecycle management from creation to fulfillment.',
-        duration: '18:20',
-      },
-      progress: 100,
-      estimatedTime: {
-        total: '2.5-3 hours',
-        bulkUpload: '1 hour',
-        apiIntegration: '1.5 hours'
-      },
-      subModules: [
+      estimatedTime: '1 hour 30 mins',
+      scenarios: [
         { 
-          id: 'om-video', 
-          title: 'Order Flow Overview', 
-          status: 'completed', 
-          type: 'video',
-          estimatedTime: '18 mins'
+          id: 'vu-stocks', 
+          title: 'Update Stocks', 
+          status: 'not-started',
+          estimatedTime: '20 mins'
         },
         { 
-          id: 'om-bulk', 
-          title: 'Bulk Order Processing', 
-          status: 'completed', 
-          type: 'bulk-upload',
-          estimatedTime: '1 hour'
-        },
-        { 
-          id: 'om-api', 
-          title: 'Order Management API', 
-          status: 'completed', 
-          type: 'api',
-          estimatedTime: '1.5 hours'
-        },
-      ],
-    },
-    {
-      id: 'pricing-updates',
-      title: 'Pricing Updates',
-      description: 'Dynamic pricing strategies and bulk price modifications',
-      status: 'not-started',
-      sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
-      video: {
-        title: 'Pricing Integration Tutorial',
-        description: 'Learn to implement dynamic pricing strategies and bulk price updates.',
-        duration: '10:15',
-      },
-      progress: 0,
-      estimatedTime: {
-        total: '1-1.5 hours',
-        bulkUpload: '25 mins',
-        apiIntegration: '45 mins'
-      },
-      subModules: [
-        { 
-          id: 'pu-video', 
-          title: 'Pricing Strategy Guide', 
-          status: 'not-started', 
-          type: 'video',
-          estimatedTime: '10 mins'
-        },
-        { 
-          id: 'pu-bulk', 
-          title: 'Bulk Price Updates', 
-          status: 'not-started', 
-          type: 'bulk-upload',
+          id: 'vu-wholesale', 
+          title: 'Update Wholesale price', 
+          status: 'not-started',
           estimatedTime: '25 mins'
         },
         { 
-          id: 'pu-api', 
-          title: 'Dynamic Pricing API', 
-          status: 'not-started', 
-          type: 'api',
-          estimatedTime: '45 mins'
+          id: 'vu-eol', 
+          title: 'Update EOL', 
+          status: 'not-started',
+          estimatedTime: '15 mins'
+        },
+        { 
+          id: 'vu-images', 
+          title: 'Add Images', 
+          status: 'not-started',
+          estimatedTime: '30 mins'
         },
       ],
     },
     {
-      id: 'shipping-tracking',
-      title: 'Shipping & Tracking',
-      description: 'Shipping integration and automated tracking updates',
+      id: 'order-fulfilment',
+      title: 'Order Fulfilment',
+      description: 'Complete order processing from query to delivery',
       status: 'not-started',
-      sections: ['Video Tutorial', 'Bulk Upload', 'API Integration'],
+      sections: ['Video Tutorial', 'Scenarios'],
       video: {
-        title: 'Shipping Integration Tutorial',
-        description: 'Set up shipping methods and automated tracking updates.',
-        duration: '14:30',
+        title: 'Order Fulfilment Process',
+        description: 'End-to-end order fulfilment workflow.',
+        duration: '30:00',
       },
       progress: 0,
-      estimatedTime: {
-        total: '2-2.5 hours',
-        bulkUpload: '50 mins',
-        apiIntegration: '1.25 hours'
+      notes: [
+        "Order fulfilment is critical for customer satisfaction.",
+        "Invoice queries help resolve customer payment issues.",
+        "Timely acknowledgement builds customer confidence.",
+        "Accurate dispatch and delivery tracking reduces support queries."
+      ],
+      estimatedTime: '2 hours',
+      scenarios: [
+        { 
+          id: 'of-query', 
+          title: 'Query the invoice', 
+          status: 'not-started',
+          estimatedTime: '25 mins'
+        },
+        { 
+          id: 'of-acknowledgement', 
+          title: 'Order Acknowledgement', 
+          status: 'not-started',
+          estimatedTime: '20 mins'
+        },
+        { 
+          id: 'of-dispatch', 
+          title: 'Order Dispatch', 
+          status: 'not-started',
+          estimatedTime: '35 mins'
+        },
+        { 
+          id: 'of-delivery', 
+          title: 'Order Delivery', 
+          status: 'not-started',
+          estimatedTime: '40 mins'
+        },
+      ],
+    },
+    {
+      id: 'order-cancellations',
+      title: 'Order Cancellations',
+      description: 'Handle order cancellations before and after dispatch',
+      status: 'not-started',
+      sections: ['Video Tutorial', 'Scenarios'],
+      video: {
+        title: 'Order Cancellation Management',
+        description: 'Learn to handle different types of order cancellations.',
+        duration: '18:00',
       },
-      subModules: [
+      progress: 0,
+      notes: [
+        "Pre-dispatch cancellations are easier to process than post-dispatch.",
+        "Post-dispatch cancellations may require coordination with shipping partners.",
+        "Always communicate cancellation status clearly to customers.",
+        "Update inventory levels appropriately after cancellations."
+      ],
+      estimatedTime: '50 mins',
+      scenarios: [
         { 
-          id: 'st-video', 
-          title: 'Shipping Setup Guide', 
-          status: 'not-started', 
-          type: 'video',
-          estimatedTime: '14 mins'
+          id: 'oc-predispatch', 
+          title: 'PreDispatch cancellation', 
+          status: 'not-started',
+          estimatedTime: '20 mins'
         },
         { 
-          id: 'st-bulk', 
-          title: 'Bulk Shipping Config', 
-          status: 'not-started', 
-          type: 'bulk-upload',
-          estimatedTime: '50 mins'
+          id: 'oc-postdispatch', 
+          title: 'PostDispatch Cancellation', 
+          status: 'not-started',
+          estimatedTime: '30 mins'
+        },
+      ],
+    },
+    {
+      id: 'returns-refunds',
+      title: 'Returns & Refunds',
+      description: 'Manage product returns and process various types of refunds',
+      status: 'not-started',
+      sections: ['Video Tutorial', 'Scenarios'],
+      video: {
+        title: 'Returns and Refunds Processing',
+        description: 'Complete guide to handling returns and refund requests.',
+        duration: '22:00',
+      },
+      progress: 0,
+      notes: [
+        "Clear return policies reduce customer disputes.",
+        "Accepting refunds builds customer trust and loyalty.",
+        "Denying refunds should be done carefully with proper justification.",
+        "Partial refunds can be used for damaged or incomplete returns."
+      ],
+      estimatedTime: '1 hour 15 mins',
+      scenarios: [
+        { 
+          id: 'rr-accept', 
+          title: 'Accept the Refund', 
+          status: 'not-started',
+          estimatedTime: '25 mins'
         },
         { 
-          id: 'st-api', 
-          title: 'Tracking API Integration', 
-          status: 'not-started', 
-          type: 'api',
-          estimatedTime: '1.25 hours'
+          id: 'rr-deny', 
+          title: 'Deny the Refund', 
+          status: 'not-started',
+          estimatedTime: '20 mins'
+        },
+        { 
+          id: 'rr-partial', 
+          title: 'Partial Refund', 
+          status: 'not-started',
+          estimatedTime: '30 mins'
+        },
+      ],
+    },
+    {
+      id: 'invoice-credit-flows',
+      title: 'Invoice & Credit Note Flows',
+      description: 'Handle invoicing and credit note processes',
+      status: 'not-started',
+      sections: ['Video Tutorial', 'Scenarios'],
+      video: {
+        title: 'Invoice and Credit Note Management',
+        description: 'Learn to manage invoices and credit notes effectively.',
+        duration: '15:00',
+      },
+      progress: 0,
+      notes: [
+        "Proper invoicing ensures smooth financial operations.",
+        "Credit notes are essential for refund and return processing.",
+        "Maintain accurate records for accounting and tax purposes.",
+        "Automated flows reduce manual errors and processing time."
+      ],
+      estimatedTime: '35 mins',
+      scenarios: [
+        { 
+          id: 'icf-invoice', 
+          title: 'Invoice Generation', 
+          status: 'not-started',
+          estimatedTime: '20 mins'
+        },
+        { 
+          id: 'icf-credit', 
+          title: 'Credit Note Processing', 
+          status: 'not-started',
+          estimatedTime: '15 mins'
         },
       ],
     },
   ]);
 
-  const [activeModule, setActiveModule] = useState('product-catalog');
+  const [activeModule, setActiveModule] = useState('advert-variant-creation');
   const [logs, setLogs] = useState<LogEntry[]>([
     {
       id: '1',

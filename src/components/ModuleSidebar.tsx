@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { CheckCircle, Circle, Play, Book, Upload, Code, ChevronDown, ChevronRight, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface SubModule {
+interface Scenario {
   id: string;
   title: string;
   status: 'not-started' | 'in-progress' | 'completed';
-  type: 'video' | 'bulk-upload' | 'api';
-  estimatedTime?: string;
+  estimatedTime: string;
 }
 
 interface Module {
@@ -24,12 +23,8 @@ interface Module {
     url?: string;
   };
   progress: number;
-  subModules: SubModule[];
-  estimatedTime?: {
-    total: string;
-    bulkUpload: string;
-    apiIntegration: string;
-  };
+  scenarios: Scenario[];
+  estimatedTime: string;
 }
 
 interface ModuleSidebarProps {
@@ -60,15 +55,8 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
     }
   };
 
-  const getSubModuleIcon = (type: SubModule['type']) => {
-    switch (type) {
-      case 'video':
-        return <Book className="h-4 w-4" />;
-      case 'bulk-upload':
-        return <Upload className="h-4 w-4" />;
-      case 'api':
-        return <Code className="h-4 w-4" />;
-    }
+  const getScenarioIcon = () => {
+    return <Play className="h-4 w-4" />;
   };
 
   const getProgressColor = (progress: number, status: Module['status']) => {
@@ -131,28 +119,13 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                         {module.description}
                       </p>
 
-                      {module.estimatedTime && (
-                        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <Clock className="h-4 w-4 text-gray-600" />
-                            <span className="text-sm font-semibold text-gray-700">Estimated Time</span>
-                          </div>
-                          <div className="space-y-1 text-xs text-gray-600">
-                            <div className="flex justify-between">
-                              <span>Total:</span>
-                              <span className="font-medium">{module.estimatedTime.total}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>Bulk Upload:</span>
-                              <span className="font-medium">{module.estimatedTime.bulkUpload}</span>
-                            </div>
-                            <div className="flex justify-between">
-                              <span>API Integration:</span>
-                              <span className="font-medium">{module.estimatedTime.apiIntegration}</span>
-                            </div>
-                          </div>
+                      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center space-x-2">
+                          <Clock className="h-4 w-4 text-gray-600" />
+                          <span className="text-sm font-semibold text-gray-700">Estimated Time:</span>
+                          <span className="text-sm font-medium text-gray-800">{module.estimatedTime}</span>
                         </div>
-                      )}
+                      </div>
                       
                       <div className="flex items-center justify-between">
                         <div className="flex-1 mr-4">
@@ -174,31 +147,30 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                   </div>
                 </div>
 
-                {isExpanded && module.subModules && (
+                {isExpanded && module.scenarios && (
                   <div className="px-6 pb-6">
                     <div className="ml-14 space-y-3 border-l-2 border-gray-200 pl-6">
-                      {module.subModules.map((subModule) => (
+                      <h4 className="text-sm font-semibold text-gray-700 mb-3">Scenarios</h4>
+                      {module.scenarios.map((scenario) => (
                         <div
-                          key={subModule.id}
+                          key={scenario.id}
                           className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
                         >
                           <div className="flex items-center space-x-3">
                             <div className="flex-shrink-0">
-                              {getStatusIcon(subModule.status)}
+                              {getStatusIcon(scenario.status)}
                             </div>
                             <div className="flex items-center space-x-3">
-                              {getSubModuleIcon(subModule.type)}
+                              {getScenarioIcon()}
                               <span className="text-sm font-medium text-gray-800">
-                                {subModule.title}
+                                {scenario.title}
                               </span>
                             </div>
                           </div>
-                          {subModule.estimatedTime && (
-                            <div className="flex items-center space-x-1 text-xs text-gray-500">
-                              <Clock className="h-3 w-3" />
-                              <span>{subModule.estimatedTime}</span>
-                            </div>
-                          )}
+                          <div className="flex items-center space-x-1 text-xs text-gray-500">
+                            <Clock className="h-3 w-3" />
+                            <span>{scenario.estimatedTime}</span>
+                          </div>
                         </div>
                       ))}
                     </div>
