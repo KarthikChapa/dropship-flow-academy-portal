@@ -1,6 +1,7 @@
 
 import React from 'react';
 import VideoSection from './VideoSection';
+import NotesSection from './NotesSection';
 import BulkUploadSection from './BulkUploadSection';
 import ApiSection from './ApiSection';
 import { Progress } from '@/components/ui/progress';
@@ -19,6 +20,7 @@ interface Module {
     url?: string;
   };
   progress: number;
+  notes?: string[];
 }
 
 interface ModuleContentProps {
@@ -79,6 +81,8 @@ const ModuleContent = ({ module, onFileUpload, onApiTest }: ModuleContentProps) 
           videoUrl={module.video.url}
           duration={module.video.duration}
         />
+
+        <NotesSection notes={module.notes || []} />
 
         <BulkUploadSection
           moduleId={module.id}

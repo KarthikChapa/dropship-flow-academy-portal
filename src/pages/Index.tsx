@@ -26,6 +26,7 @@ interface Module {
     url?: string;
   };
   progress: number;
+  notes?: string[];
   subModules: SubModule[];
   estimatedTime?: {
     total: string;
@@ -60,6 +61,12 @@ const Index = () => {
         duration: '15:30',
       },
       progress: 65,
+      notes: [
+        "Product catalog management is crucial for maintaining consistent inventory across all sales channels.",
+        "Ensure product data includes all required fields: SKU, title, description, price, and inventory count.",
+        "Use bulk upload for initial setup and API integration for real-time updates.",
+        "Always validate product data before uploading to prevent errors in your storefront."
+      ],
       estimatedTime: {
         total: '2-3 hours',
         bulkUpload: '45 mins',
