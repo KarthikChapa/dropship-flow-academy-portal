@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Header from '@/components/Header';
 import ModuleSidebar from '@/components/ModuleSidebar';
 import ModuleContent from '@/components/ModuleContent';
-import LogSection from '@/components/LogSection';
+import SummarySection from '@/components/SummarySection';
 import { useToast } from '@/hooks/use-toast';
 
 interface Scenario {
@@ -30,15 +30,6 @@ interface Module {
   estimatedTime: string;
 }
 
-interface LogEntry {
-  id: string;
-  timestamp: string;
-  type: 'bulk' | 'api';
-  operation: string;
-  status: 'success' | 'error' | 'warning';
-  message: string;
-  details?: string;
-}
 
 const Index = () => {
   const { toast } = useToast();
@@ -281,79 +272,30 @@ const Index = () => {
   ]);
 
   const [activeModule, setActiveModule] = useState('advert-variant-creation');
-  const [logs, setLogs] = useState<LogEntry[]>([
-    {
-      id: '1',
-      timestamp: '2024-01-15T10:30:00Z',
-      type: 'bulk',
-      operation: 'Product Catalog Upload',
-      status: 'success',
-      message: 'Successfully uploaded 150 products',
-      details: 'File: products_batch_1.xlsx\nProcessed: 150 items\nTime: 2.3 seconds'
-    },
-    {
-      id: '2',
-      timestamp: '2024-01-15T09:15:00Z',
-      type: 'api',
-      operation: 'Inventory Sync API',
-      status: 'error',
-      message: 'API authentication failed',
-      details: 'Error: Invalid API key\nEndpoint: /api/v1/inventory\nStatus: 401 Unauthorized'
-    },
-    {
-      id: '3',
-      timestamp: '2024-01-15T08:45:00Z',
-      type: 'bulk',
-      operation: 'Price Update',
-      status: 'warning',
-      message: 'Partial upload completed with warnings',
-      details: 'File: prices_update.xlsx\nProcessed: 95/100 items\nWarnings: 5 items had invalid price format'
-    }
-  ]);
 
   const currentModule = modules.find(m => m.id === activeModule) || modules[0];
 
   const handleFileUpload = (file: File, type: string) => {
-    const newLog: LogEntry = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      type: 'bulk',
-      operation: `${currentModule.title} - Bulk Upload`,
-      status: Math.random() > 0.3 ? 'success' : 'error',
-      message: Math.random() > 0.3 
-        ? `Successfully processed ${file.name}` 
-        : `Failed to process ${file.name}`,
-      details: `File: ${file.name}\nSize: ${(file.size / 1024).toFixed(1)} KB\nModule: ${currentModule.title}`
-    };
-
-    setLogs(prev => [newLog, ...prev]);
+    const success = Math.random() > 0.3;
     
     toast({
-      title: newLog.status === 'success' ? "Upload Successful" : "Upload Failed",
-      description: newLog.message,
-      variant: newLog.status === 'success' ? "default" : "destructive",
+      title: success ? "Upload Successful" : "Upload Failed",
+      description: success 
+        ? `Successfully processed ${file.name}` 
+        : `Failed to process ${file.name}`,
+      variant: success ? "default" : "destructive",
     });
   };
 
   const handleApiTest = (endpoint: string, data: any) => {
-    const newLog: LogEntry = {
-      id: Date.now().toString(),
-      timestamp: new Date().toISOString(),
-      type: 'api',
-      operation: `${currentModule.title} - API Test`,
-      status: Math.random() > 0.4 ? 'success' : 'error',
-      message: Math.random() > 0.4 
-        ? 'API test completed successfully' 
-        : 'API test failed',
-      details: `Endpoint: ${endpoint}\nPayload: ${JSON.stringify(data, null, 2)}\nModule: ${currentModule.title}`
-    };
-
-    setLogs(prev => [newLog, ...prev]);
+    const success = Math.random() > 0.4;
     
     toast({
-      title: newLog.status === 'success' ? "API Test Successful" : "API Test Failed",
-      description: newLog.message,
-      variant: newLog.status === 'success' ? "default" : "destructive",
+      title: success ? "API Test Successful" : "API Test Failed",
+      description: success 
+        ? 'API test completed successfully' 
+        : 'API test failed',
+      variant: success ? "default" : "destructive",
     });
   };
 
@@ -378,7 +320,7 @@ const Index = () => {
           </div>
           
           <div className="lg:w-96 border-l border-gray-200 bg-white p-4 overflow-y-auto">
-            <LogSection logs={logs} />
+            <SummarySection module={currentModule} />
           </div>
         </div>
       </div>
