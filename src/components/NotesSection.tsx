@@ -16,7 +16,7 @@ const NotesSection = ({ notes }: NotesSectionProps) => {
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <BookOpen className="h-5 w-5 text-primary" />
-          <span>Module Notes</span>
+          <span>Scenario Notes</span>
         </CardTitle>
         <CardDescription>
           Important information and key points for this module

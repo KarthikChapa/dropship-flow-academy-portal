@@ -30,10 +30,12 @@ interface Module {
 interface ModuleSidebarProps {
   modules: Module[];
   activeModule: string;
+  activeScenario?: string;
   onModuleSelect: (moduleId: string) => void;
+  onScenarioSelect: (moduleId: string, scenarioId: string) => void;
 }
 
-const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarProps) => {
+const ModuleSidebar = ({ modules, activeModule, activeScenario, onModuleSelect, onScenarioSelect }: ModuleSidebarProps) => {
   const [expandedModules, setExpandedModules] = useState<string[]>([activeModule]);
 
   const toggleModule = (moduleId: string) => {
@@ -151,28 +153,35 @@ const ModuleSidebar = ({ modules, activeModule, onModuleSelect }: ModuleSidebarP
                   <div className="px-6 pb-6">
                     <div className="ml-14 space-y-3 border-l-2 border-gray-200 pl-6">
                       <h4 className="text-sm font-semibold text-gray-700 mb-3">Scenarios</h4>
-                      {module.scenarios.map((scenario) => (
-                        <div
-                          key={scenario.id}
-                          className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <div className="flex-shrink-0">
-                              {getStatusIcon(scenario.status)}
-                            </div>
+                      {module.scenarios.map((scenario) => {
+                        const isActiveScenario = activeScenario === scenario.id;
+                        return (
+                          <div
+                            key={scenario.id}
+                            className={cn(
+                              "flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer",
+                              isActiveScenario && "bg-blue-100 border border-blue-300"
+                            )}
+                            onClick={() => onScenarioSelect(module.id, scenario.id)}
+                          >
                             <div className="flex items-center space-x-3">
-                              {getScenarioIcon()}
-                              <span className="text-sm font-medium text-gray-800">
-                                {scenario.title}
-                              </span>
+                              <div className="flex-shrink-0">
+                                {getStatusIcon(scenario.status)}
+                              </div>
+                              <div className="flex items-center space-x-3">
+                                {getScenarioIcon()}
+                                <span className="text-sm font-medium text-gray-800">
+                                  {scenario.title}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="flex items-center space-x-1 text-xs text-gray-500">
+                              <Clock className="h-3 w-3" />
+                              <span>{scenario.estimatedTime}</span>
                             </div>
                           </div>
-                          <div className="flex items-center space-x-1 text-xs text-gray-500">
-                            <Clock className="h-3 w-3" />
-                            <span>{scenario.estimatedTime}</span>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
                 )}

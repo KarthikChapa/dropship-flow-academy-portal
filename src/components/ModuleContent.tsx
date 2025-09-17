@@ -2,7 +2,6 @@
 import React from 'react';
 import VideoSection from './VideoSection';
 import NotesSection from './NotesSection';
-import BulkUploadSection from './BulkUploadSection';
 import ApiSection from './ApiSection';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
@@ -30,13 +29,28 @@ interface Module {
   estimatedTime: string;
 }
 
+interface Scenario {
+  id: string;
+  title: string;
+  status: 'not-started' | 'in-progress' | 'completed';
+  estimatedTime: string;
+  video: {
+    title: string;
+    description: string;
+    duration: string;
+    url?: string;
+  };
+  notes?: string[];
+}
+
 interface ModuleContentProps {
   module: Module;
+  scenario?: Scenario;
   onFileUpload: (file: File, type: string) => void;
   onApiTest: (endpoint: string, data: any) => void;
 }
 
-const ModuleContent = ({ module, onFileUpload, onApiTest }: ModuleContentProps) => {
+const ModuleContent = ({ module, scenario, onFileUpload, onApiTest }: ModuleContentProps) => {
   const getStatusColor = (status: Module['status']) => {
     switch (status) {
       case 'completed':
@@ -83,18 +97,13 @@ const ModuleContent = ({ module, onFileUpload, onApiTest }: ModuleContentProps) 
 
       <div className="space-y-6">
         <VideoSection
-          title={module.video.title}
-          description={module.video.description}
-          videoUrl={module.video.url}
-          duration={module.video.duration}
+          title={scenario ? scenario.video.title : module.video.title}
+          description={scenario ? scenario.video.description : module.video.description}
+          videoUrl={scenario ? scenario.video.url : module.video.url}
+          duration={scenario ? scenario.video.duration : module.video.duration}
         />
 
-        <NotesSection notes={module.notes || []} />
-
-        <BulkUploadSection
-          moduleId={module.id}
-          onUpload={onFileUpload}
-        />
+        <NotesSection notes={scenario ? (scenario.notes || []) : (module.notes || [])} />
 
         <ApiSection
           moduleId={module.id}
