@@ -4,6 +4,7 @@ import VideoSection from './VideoSection';
 import NotesSection from './NotesSection';
 import BulkUploadSection from './BulkUploadSection';
 import ApiSection from './ApiSection';
+import InteractiveSection from './InteractiveSection';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 
@@ -105,6 +106,8 @@ const ModuleContent = ({ module, scenario, onFileUpload, onApiTest }: ModuleCont
         />
 
         <NotesSection notes={scenario ? (scenario.notes || []) : (module.notes || [])} />
+
+        {scenario && <InteractiveSection scenarioId={scenario.id} />}
 
         <BulkUploadSection
           moduleId={module.id}
