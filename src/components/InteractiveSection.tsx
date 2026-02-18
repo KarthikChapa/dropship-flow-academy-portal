@@ -94,26 +94,28 @@ const InteractiveSection = ({ scenarioId }: InteractiveSectionProps) => {
               <ScrollArea className="h-[300px] w-full">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Advert ID</TableHead>
-                      <TableHead>Advert Name</TableHead>
-                      <TableHead>Variant IDs</TableHead>
-                      <TableHead>Variant MPN</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="text-muted-foreground">No data yet</TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-        );
+                     <TableRow>
+                       <TableHead>Advert ID</TableHead>
+                       <TableHead>Advert Name</TableHead>
+                       <TableHead>Variant IDs</TableHead>
+                       <TableHead>Variant MPN</TableHead>
+                       <TableHead>Images Added</TableHead>
+                     </TableRow>
+                   </TableHeader>
+                   <TableBody>
+                     <TableRow>
+                       <TableCell className="text-muted-foreground">No data yet</TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                     </TableRow>
+                   </TableBody>
+                 </Table>
+               </ScrollArea>
+             </CardContent>
+           </Card>
+         );
 
       case 'avc-multiple':
         return (
@@ -126,26 +128,28 @@ const InteractiveSection = ({ scenarioId }: InteractiveSectionProps) => {
               <ScrollArea className="h-[300px] w-full">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Advert ID</TableHead>
-                      <TableHead>Advert Name</TableHead>
-                      <TableHead>Variant IDs</TableHead>
-                      <TableHead>Variant MPN</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell className="text-muted-foreground">No data yet</TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                      <TableCell></TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </ScrollArea>
-            </CardContent>
-          </Card>
-        );
+                     <TableRow>
+                       <TableHead>Advert ID</TableHead>
+                       <TableHead>Advert Name</TableHead>
+                       <TableHead>Variant IDs</TableHead>
+                       <TableHead>Variant MPN</TableHead>
+                       <TableHead>Images Added</TableHead>
+                     </TableRow>
+                   </TableHeader>
+                   <TableBody>
+                     <TableRow>
+                       <TableCell className="text-muted-foreground">No data yet</TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                       <TableCell></TableCell>
+                     </TableRow>
+                   </TableBody>
+                 </Table>
+               </ScrollArea>
+             </CardContent>
+           </Card>
+         );
 
       case 'vu-stocks':
         return (
