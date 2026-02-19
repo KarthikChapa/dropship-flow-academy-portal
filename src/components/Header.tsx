@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { User, Bell, Settings } from 'lucide-react';
+import { User, Bell, Settings, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -12,7 +12,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-const Header = () => {
+interface HeaderProps {
+  onLogout?: () => void;
+}
+
+const Header = ({ onLogout }: HeaderProps) => {
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">
@@ -54,8 +58,9 @@ const Header = () => {
                 <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                Log out
+              <DropdownMenuItem onClick={onLogout} className="cursor-pointer">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

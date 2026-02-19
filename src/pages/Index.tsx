@@ -5,6 +5,10 @@ import ModuleContent from '@/components/ModuleContent';
 import SummarySection from '@/components/SummarySection';
 import { useToast } from '@/hooks/use-toast';
 
+interface IndexProps {
+  onLogout?: () => void;
+}
+
 interface Scenario {
   id: string;
   title: string;
@@ -38,7 +42,7 @@ interface Module {
 }
 
 
-const Index = () => {
+const Index = ({ onLogout }: IndexProps) => {
   const { toast } = useToast();
   
   const [modules] = useState<Module[]>([
@@ -487,7 +491,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Header onLogout={onLogout} />
       
       <div className="flex">
         <ModuleSidebar
